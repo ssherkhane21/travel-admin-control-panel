@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Table from '../../components/ui/Table';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
 
 const mockBusOperators = [
   { 
@@ -135,8 +137,11 @@ const BusOperators = () => {
     <div>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Bus Operators</h2>
-        <Link to="/bus-management/operators/new" className="btn btn-primary">
-          Add New Operator
+        <Link to="/bus-management/operators/new">
+          <Button>
+            <Plus className="h-4 w-4 mr-2" />
+            Add New Operator
+          </Button>
         </Link>
       </div>
       

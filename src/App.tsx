@@ -8,6 +8,9 @@ import Layout from "./components/layout/Layout";
 import Dashboard from "./pages/Dashboard";
 import BusManagement from "./pages/BusManagement";
 import BusOperators from "./pages/BusManagement/BusOperators";
+import BusOperatorDetails from "./pages/BusManagement/BusOperatorDetails";
+import BusOperatorBuses from "./pages/BusManagement/BusOperatorBuses";
+import BusBookings from "./pages/BusManagement/BusBookings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,7 +27,9 @@ const App = () => (
             <Route path="/bus-management" element={<BusManagement />}>
               <Route index element={<BusOperators />} />
               <Route path="operators" element={<BusOperators />} />
-              {/* Add other bus management routes here */}
+              <Route path="operators/:id" element={<BusOperatorDetails />} />
+              <Route path="operators/:id/buses" element={<BusOperatorBuses />} />
+              <Route path="bookings" element={<BusBookings />} />
             </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
