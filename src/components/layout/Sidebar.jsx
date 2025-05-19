@@ -104,7 +104,11 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
     });
   }, [location.pathname]);
 
+  // Check if the path is active (exact match or starts with path/)
   const isActive = (path) => {
+    if (path === '/') {
+      return location.pathname === path;
+    }
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
   };
 
