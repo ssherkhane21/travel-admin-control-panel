@@ -1,95 +1,94 @@
 
 import React, { useState } from 'react';
 import Table from '../../components/ui/Table';
-import { format } from 'date-fns';
+import { toast } from "@/hooks/use-toast";
 
 const mockHotelBookings = [
   { 
-    id: "H1001", 
-    hotelId: "GRH123",
-    customerName: "David Wilson", 
-    phone: "9876543210", 
-    email: "david@example.com", 
-    checkinDate: new Date("2025-06-01"), 
-    checkoutDate: new Date("2025-06-03"), 
-    amount: 4200,
-    idProof: "passport.jpg",
-    journeyDetails: "Business trip, arriving by flight AI101 at 11:00 AM"
+    id: 1, 
+    hotelId: 'HTL001', 
+    customerName: 'Rakesh Sharma', 
+    phone: '9876543210', 
+    email: 'rakesh@example.com', 
+    checkinDate: '2025-05-20',
+    checkoutDate: '2025-05-22',
+    amount: 3200,
+    idProof: 'aadhaar',
+    idNumber: '1234 5678 9012',
+    journeyDetails: 'Business trip, arriving by flight at 2PM'
   },
   { 
-    id: "H1002", 
-    hotelId: "SRH456",
-    customerName: "Jennifer Brown", 
-    phone: "9876543211", 
-    email: "jennifer@example.com", 
-    checkinDate: new Date("2025-06-05"), 
-    checkoutDate: new Date("2025-06-10"), 
-    amount: 12500,
-    idProof: "driver-license.jpg",
-    journeyDetails: "Family vacation, 2 adults, 2 children"
-  },
-  { 
-    id: "H1003", 
-    hotelId: "PLZ789",
-    customerName: "Michael Johnson", 
-    phone: "9876543212", 
-    email: "michael@example.com", 
-    checkinDate: new Date("2025-06-15"), 
-    checkoutDate: new Date("2025-06-17"), 
+    id: 2, 
+    hotelId: 'HTL002', 
+    customerName: 'Priya Singh', 
+    phone: '9876543211', 
+    email: 'priya@example.com', 
+    checkinDate: '2025-05-21',
+    checkoutDate: '2025-05-25',
     amount: 6800,
-    idProof: "aadhar-card.jpg",
-    journeyDetails: "Anniversary celebration"
+    idProof: 'passport',
+    idNumber: 'J8743219',
+    journeyDetails: 'Family vacation, 2 adults and 1 child'
   },
   { 
-    id: "H1004", 
-    hotelId: "SRH456",
-    customerName: "Sarah Williams", 
-    phone: "9876543213", 
-    email: "sarah@example.com", 
-    checkinDate: new Date("2025-06-20"), 
-    checkoutDate: new Date("2025-06-25"), 
-    amount: 15000,
-    idProof: "passport.jpg",
-    journeyDetails: "Business conference, requires early check-in"
+    id: 3, 
+    hotelId: 'HTL003', 
+    customerName: 'Arun Kumar', 
+    phone: '9876543212', 
+    email: 'arun@example.com', 
+    checkinDate: '2025-05-22',
+    checkoutDate: '2025-05-23',
+    amount: 1500,
+    idProof: 'driving_license',
+    idNumber: 'DL123456789',
+    journeyDetails: 'Business meeting, needs early check-in'
   },
   { 
-    id: "H1005", 
-    hotelId: "GRH123",
-    customerName: "Robert Davis", 
-    phone: "9876543214", 
-    email: "robert@example.com", 
-    checkinDate: new Date("2025-06-28"), 
-    checkoutDate: new Date("2025-06-30"), 
-    amount: 5600,
-    idProof: "voter-id.jpg",
-    journeyDetails: "Weekend getaway"
+    id: 4, 
+    hotelId: 'HTL001', 
+    customerName: 'Sunita Patel', 
+    phone: '9876543213', 
+    email: 'sunita@example.com', 
+    checkinDate: '2025-05-25',
+    checkoutDate: '2025-05-28',
+    amount: 4800,
+    idProof: 'voter_id',
+    idNumber: 'VTR987654321',
+    journeyDetails: 'Anniversary celebration'
+  },
+  { 
+    id: 5, 
+    hotelId: 'HTL004', 
+    customerName: 'Vijay Mehta', 
+    phone: '9876543214', 
+    email: 'vijay@example.com', 
+    checkinDate: '2025-05-27',
+    checkoutDate: '2025-05-29',
+    amount: 2200,
+    idProof: 'aadhaar',
+    idNumber: '9876 5432 1098',
+    journeyDetails: 'Attending a conference nearby'
   },
 ];
 
 const HotelBookings = () => {
   const [bookings, setBookings] = useState(mockHotelBookings);
   const [selectedBooking, setSelectedBooking] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
 
-  const openDetailsModal = (booking) => {
+  const handleViewDetails = (booking) => {
     setSelectedBooking(booking);
-    setIsModalOpen(true);
+    setShowDetailsModal(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedBooking(null);
+    setShowDetailsModal(false);
   };
 
   const columns = [
     { 
-      header: 'Booking ID', 
-      accessor: 'id',
-      filterable: true 
-    },
-    { 
       header: 'Hotel ID', 
-      accessor: 'hotelId',
+      accessor: 'hotelId', 
       filterable: true 
     },
     { 
@@ -109,7 +108,6 @@ const HotelBookings = () => {
       header: 'Check-in Date', 
       accessor: 'checkinDate',
       filterable: true,
-      cell: (row) => format(row.checkinDate, 'dd/MM/yyyy'),
       filterComponent: (value, onChange) => (
         <input
           type="date"
@@ -123,7 +121,6 @@ const HotelBookings = () => {
       header: 'Check-out Date', 
       accessor: 'checkoutDate',
       filterable: true,
-      cell: (row) => format(row.checkoutDate, 'dd/MM/yyyy'),
       filterComponent: (value, onChange) => (
         <input
           type="date"
@@ -147,7 +144,7 @@ const HotelBookings = () => {
       cell: (row) => (
         <button 
           className="btn btn-primary btn-sm"
-          onClick={() => openDetailsModal(row)}
+          onClick={() => handleViewDetails(row)}
         >
           View Details
         </button>
@@ -169,85 +166,45 @@ const HotelBookings = () => {
         pagination={true}
       />
 
-      {/* Details Modal */}
-      {isModalOpen && selectedBooking && (
+      {showDetailsModal && selectedBooking && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-            <div className="p-5">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold">Booking Details</h3>
-                <button 
-                  onClick={closeModal}
-                  className="text-gray-500 hover:text-gray-700"
-                >
-                  ✕
-                </button>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <p className="text-sm text-gray-500">Booking ID</p>
-                  <p className="font-semibold">{selectedBooking.id}</p>
-                </div>
-                
-                <div>
-                  <p className="text-sm text-gray-500">Hotel ID</p>
-                  <p className="font-semibold">{selectedBooking.hotelId}</p>
-                </div>
-                
-                <div>
-                  <p className="text-sm text-gray-500">Customer Name</p>
-                  <p className="font-semibold">{selectedBooking.customerName}</p>
-                </div>
-                
-                <div>
-                  <p className="text-sm text-gray-500">Phone</p>
-                  <p className="font-semibold">{selectedBooking.phone}</p>
-                </div>
-                
-                <div>
-                  <p className="text-sm text-gray-500">Email</p>
-                  <p className="font-semibold">{selectedBooking.email}</p>
-                </div>
-                
-                <div>
-                  <p className="text-sm text-gray-500">Amount</p>
-                  <p className="font-semibold">₹{selectedBooking.amount.toLocaleString()}</p>
-                </div>
-                
-                <div>
-                  <p className="text-sm text-gray-500">Check-in Date</p>
-                  <p className="font-semibold">{format(selectedBooking.checkinDate, 'dd/MM/yyyy')}</p>
-                </div>
-                
-                <div>
-                  <p className="text-sm text-gray-500">Check-out Date</p>
-                  <p className="font-semibold">{format(selectedBooking.checkoutDate, 'dd/MM/yyyy')}</p>
-                </div>
-              </div>
-              
-              <div className="mb-4">
-                <p className="text-sm text-gray-500 mb-1">Journey Details</p>
-                <p className="p-2 border rounded-md bg-gray-50">{selectedBooking.journeyDetails}</p>
-              </div>
-              
+          <div className="bg-white p-6 rounded-lg w-full max-w-2xl">
+            <h2 className="text-xl font-bold mb-4">Booking Details</h2>
+            
+            <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
-                <p className="text-sm text-gray-500 mb-2">ID Proof</p>
-                <div className="border p-3 rounded-md">
-                  <p>{selectedBooking.idProof}</p>
-                  {/* In a real app, you would display an image or provide a download link */}
-                  <button className="btn btn-sm btn-secondary mt-2">View ID Proof</button>
-                </div>
+                <h3 className="font-semibold">Customer Information</h3>
+                <p><span className="font-medium">Name:</span> {selectedBooking.customerName}</p>
+                <p><span className="font-medium">Phone:</span> {selectedBooking.phone}</p>
+                <p><span className="font-medium">Email:</span> {selectedBooking.email}</p>
               </div>
-              
-              <div className="mt-6 flex justify-end">
-                <button 
-                  onClick={closeModal}
-                  className="btn btn-primary"
-                >
-                  Close
-                </button>
+              <div>
+                <h3 className="font-semibold">Booking Information</h3>
+                <p><span className="font-medium">Hotel ID:</span> {selectedBooking.hotelId}</p>
+                <p><span className="font-medium">Check-in:</span> {selectedBooking.checkinDate}</p>
+                <p><span className="font-medium">Check-out:</span> {selectedBooking.checkoutDate}</p>
+                <p><span className="font-medium">Amount:</span> ₹{selectedBooking.amount.toLocaleString()}</p>
               </div>
+            </div>
+            
+            <div className="mb-4">
+              <h3 className="font-semibold">ID Proof</h3>
+              <p><span className="font-medium">Type:</span> {selectedBooking.idProof}</p>
+              <p><span className="font-medium">Number:</span> {selectedBooking.idNumber}</p>
+            </div>
+            
+            <div className="mb-4">
+              <h3 className="font-semibold">Journey Details</h3>
+              <p>{selectedBooking.journeyDetails}</p>
+            </div>
+            
+            <div className="flex justify-end">
+              <button 
+                className="btn btn-secondary mr-2"
+                onClick={closeModal}
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
